@@ -54,14 +54,75 @@ public class HomeWork5 {
 
     public static class Person {
         // Напиши здесь свою реализацию класса Person
+        private String name;
+    private int protection;
+    private int hp;
+    String getName(){
+        return name;
+    }
+    int getProtection(){
+        return protection;
+    }
+    int getHp(){
+        return hp;
+    }
+    protected Person(String name, int protection, int hp){
+        this.name = name;
+        this.protection = protection;
+        this.hp = hp;
+    }
+    public Person(String name){
+        this.name = name;
+
+    }
+    String announce(){
+        return "Person " + name + " имеет характеристики:" + hp +" здоровья и " + protection + " защиты. ";
+    }
+    void takeDamage(int damage) throws Exception {
+        hp = hp - (damage - protection);
+        if(damage < 0 || hp < 0) throw new Exception("Здоровье или урон меньше нуля");
+        if(hp == 0) throw new PersonDead();
+    }
+    int facePunch(int damage){
+        damage = 1;
+        return damage;
+    }
     }
 
     public static class Mage extends Person{
         // Напиши здесь свою реализацию класса Mage (не забудь про наследование от Person)
+        Mage(String name){
+        super(name, 15,100);
+    }
+    @Override
+    String announce(){
+        return "Mage" +super.announce();
+    }
+    @Override
+    void takeDamage(int damage) throws Exception{
+        super.takeDamage(damage - getProtection() - (getHp()%10));
+    }
+    int fireBall(){
+        return 45;
+    }
     }
 
     public static class Archer extends Person{
         // Напиши здесь свою реализацию класса Archer (не забудь про наследование от Person)
+        Archer(String name){
+        super(name, 12, 120);
+    }
+    @Override
+    String announce(){
+        return "Archer"+super.announce();
+    }
+    @Override
+    void takeDamage(int damage) throws Exception{
+        super.takeDamage(damage - getProtection()+(getHp()%10));
+    }
+    int shootBow(){
+        return 40 + (getHp()%10);
+    }
     }
 
     /*
